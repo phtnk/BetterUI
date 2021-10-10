@@ -178,11 +178,13 @@ namespace BetterUI.Patches
         {
           Image image = Hud.instance.m_foodBars[i]; // foodBarRoot (bar1, bar2, bar3, baseBar?)
           Image icon = Hud.instance.m_foodIcons[i]; // food0 -> foodicon0
+
           if (i < foods.Count)
           {
             Player.Food food = foods[i];
             Image tmpImage = foodBarRoot.Find(image.name).GetComponent<Image>();
             Image tmpIcon = foodPanel.Find($"food{i}").Find($"foodicon{i}").GetComponent<Image>();
+            Text tmpText = foodPanel.Find($"food{i}").Find($"time").GetComponent<Text>();
             tmpImage.gameObject.SetActive(true);
             tmpImage.color = image.color;
             tmpImage.rectTransform.anchoredPosition = image.rectTransform.anchoredPosition;
@@ -194,14 +196,29 @@ namespace BetterUI.Patches
 
             tmpIcon.sprite = icon.sprite;
             tmpIcon.gameObject.SetActive(true);
-            tmpIcon.color = icon.color;
+
+            tmpText.gameObject.SetActive(true);
+            if (food.m_time >= 60f)
+            {
+              tmpText.text = Mathf.CeilToInt(food.m_time / 60f) + "m";
+              tmpText.color = Color.white;
+              tmpIcon.color = Color.white;
+            }
+            else
+            {
+              tmpText.text = Mathf.FloorToInt(food.m_time) + "s";
+              tmpText.color = new Color(1f, 1f, 1f, 0.4f + Mathf.Sin(Time.time * 5f) * 0.6f); // lowered flashing frequency by half
+              tmpIcon.color = new Color(1f, 1f, 1f, 0.7f + Mathf.Sin(Time.time * 5f) * 0.3f); // food now only flashing when less than a minute left, not from half the duration
+            }
           }
           else
           {
             Image tmpImage = foodBarRoot.Find(image.name).GetComponent<Image>();
             Image tmpIcon = foodPanel.Find($"food{i}").Find($"foodicon{i}").GetComponent<Image>();
+            Text tmpText = foodPanel.Find($"food{i}").Find($"time").GetComponent<Text>();
             tmpImage.gameObject.SetActive(false);
             tmpIcon.gameObject.SetActive(false);
+            tmpText.gameObject.SetActive(false);
           }
         }
         float size = Mathf.Ceil(player.GetMaxHealth() / 25f * 32f);
