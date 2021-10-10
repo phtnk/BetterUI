@@ -17,7 +17,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>Package\plugins\$(AssemblyName)\</OutputPath>
+	  <OutputPath>Package\plugins\$(AssemblyName)\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>none</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -363,7 +363,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy "$(TargetPath)" "$(GameDir)\Valheim\BepInEx\plugins\.custom\" /q /y /i 
+    <PostBuildEvent>xcopy "$(TargetPath)" "$(GameDir)\BepInEx\plugins\.custom\" /q /y /i
 </PostBuildEvent>
   </PropertyGroup>
 </Project>
