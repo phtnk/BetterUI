@@ -196,18 +196,19 @@ namespace BetterUI.Patches
 
             tmpIcon.sprite = icon.sprite;
             tmpIcon.gameObject.SetActive(true);
-            tmpIcon.color = icon.color;
 
             tmpText.gameObject.SetActive(true);
             if (food.m_time >= 60f)
             {
               tmpText.text = Mathf.CeilToInt(food.m_time / 60f) + "m";
               tmpText.color = Color.white;
+              tmpIcon.color = Color.white;
             }
             else
             {
               tmpText.text = Mathf.FloorToInt(food.m_time) + "s";
-              tmpText.color = new Color(1f, 1f, 1f, 0.4f + Mathf.Sin(Time.time * 10f) * 0.6f);
+              tmpText.color = new Color(1f, 1f, 1f, 0.4f + Mathf.Sin(Time.time * 5f) * 0.6f); // lowered flashing frequency by half
+              tmpIcon.color = new Color(1f, 1f, 1f, 0.7f + Mathf.Sin(Time.time * 5f) * 0.3f); // food now only flashing when less than a minute left, not from half the duration
             }
           }
           else
